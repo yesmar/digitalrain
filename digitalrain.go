@@ -1,18 +1,17 @@
 package main
 
-import (
-	"github.com/gopherjs/gopherjs/js"
-)
+import "github.com/gopherjs/gopherjs/js"
 
 var (
-	showBlueHeads       = true
-	overlap             = 0                                    // 0-N, allowable drop overlaps for a column
-	background          = "linear-gradient(#ccddee, #ffffff);" //"#000000"
-	githubLinkColor     = "rgba(107,165,184,.5)"               //"rgba(59,128,109,.5)"
-	githubLinkOverColor = "rgba(107,165,184,1)"                //"rgba(59,128,109,1)"
-	githubLink          = "http://github.com/tidwall/digitalrain"
-	level1Cols          = 40
-	level2Cols          = 60
+	showBlueHeads = true
+	overlap       = 0                                    // 0-N, allowable drop overlaps for a column
+	background    = "linear-gradient(#ccddee, #ffffff);" //"#000000"
+	//githubLinkColor     = "rgba(107,165,184,.5)"               //"rgba(59,128,109,.5)"
+	//githubLinkOverColor = "rgba(107,165,184,1)"                //"rgba(59,128,109,1)"
+	//githubLink          = "http://github.com/tidwall/digitalrain"
+	pageTitle  = "A prison for your mind"
+	level1Cols = 40
+	level2Cols = 60
 )
 
 var lowGlyphCanvases []*GlyphCanvas
@@ -23,14 +22,14 @@ var index = 1
 func main() {
 	sheet := js.Global.Get("document").Call("createElement", "style")
 	sheet.Set("innerHTML",
-		`html, body { 
+		`html, body {
 			padding:0; margin:0; border:0; width:100%; height:100%; overflow:hidden;
 		}
 		html{
 			background: black;
 		}`)
 	js.Global.Get("document").Get("head").Call("appendChild", sheet)
-	js.Global.Get("document").Set("title", "whoa")
+	js.Global.Get("document").Set("title", pageTitle)
 	js.Global.Call("addEventListener", "load", func() {
 		lowGlyphCanvases = []*GlyphCanvas{NewGlyphCanvas("#6ba5b8"), NewGlyphCanvas("#3b806d")}
 		highGlyphCanvases = []*GlyphCanvas{NewGlyphCanvas("#5b95a8"), NewGlyphCanvas("#5b9b9b")}
@@ -59,16 +58,16 @@ func main() {
 		js.Global.Call("addEventListener", "resize", func() {
 			rain2.layout()
 		})
-		rain2.Clicked = func() {
-			return
-			index++
-			rain1.lowGlyphCanvas = lowGlyphCanvases[index%2]
-			rain1.highGlyphCanvas = highGlyphCanvases[index%2]
-			rain2.lowGlyphCanvas = lowGlyphCanvases[index%2]
-			rain2.highGlyphCanvas = highGlyphCanvases[index%2]
+		// rain2.Clicked = func() {
+		// 	return
+		// 	index++
+		// 	rain1.lowGlyphCanvas = lowGlyphCanvases[index%2]
+		// 	rain1.highGlyphCanvas = highGlyphCanvases[index%2]
+		// 	rain2.lowGlyphCanvas = lowGlyphCanvases[index%2]
+		// 	rain2.highGlyphCanvas = highGlyphCanvases[index%2]
 
-			js.Global.Get("document").Get("body").Get("style").Set("background", backgrounds[index%2])
-		}
+		// 	js.Global.Get("document").Get("body").Get("style").Set("background", backgrounds[index%2])
+		// }
 	})
 }
 
@@ -161,16 +160,15 @@ func (r *DigitalRain) layout() {
 		r.lowGlyphCanvas = lowGlyphCanvases[index%2]
 	}
 
-	r.canvas.Call("addEventListener", "click", func(ev *js.Object) {
-		if r.overLink(ev.Get("x").Int(), ev.Get("y").Int()) {
-			js.Global.Set("location", githubLink)
-
-		} else {
-			if r.Clicked != nil {
-				r.Clicked()
-			}
-		}
-	})
+	// r.canvas.Call("addEventListener", "click", func(ev *js.Object) {
+	// 	if r.overLink(ev.Get("x").Int(), ev.Get("y").Int()) {
+	// 		js.Global.Set("location", githubLink)
+	// 	} else {
+	// 		if r.Clicked != nil {
+	// 			r.Clicked()
+	// 		}
+	// 	}
+	// })
 
 	r.canvas.Call("addEventListener", "mousemove", func(ev *js.Object) {
 		if r.overLink(ev.Get("x").Int(), ev.Get("y").Int()) {
@@ -291,14 +289,14 @@ func (r *DigitalRain) drawTitle(text string, color string, fontSize float64, y f
 	return ny
 }
 
-func (r *DigitalRain) drawTitles() {
-	y := float64(0)
-	if r.linkover {
-		y = r.drawTitle(shortLink(githubLink), githubLinkOverColor, 15*r.ratio, y)
-	} else {
-		y = r.drawTitle(shortLink(githubLink), githubLinkColor, 15*r.ratio, y)
-	}
-}
+// func (r *DigitalRain) drawTitles() {
+// 	y := float64(0)
+// 	if r.linkover {
+// 		y = r.drawTitle(shortLink(githubLink), githubLinkOverColor, 15*r.ratio, y)
+// 	} else {
+// 		y = r.drawTitle(shortLink(githubLink), githubLinkColor, 15*r.ratio, y)
+// 	}
+// }
 
 func (r *DigitalRain) loop(timestamp Duration) {
 	if timestamp == 0 || r.timestamp == 0 {
@@ -310,7 +308,7 @@ func (r *DigitalRain) loop(timestamp Duration) {
 
 	r.dropRandomWaterDrop(timestamp)
 	r.ctx.Call("clearRect", 0, 0, r.width, r.height)
-	defer r.drawTitles()
+	//defer r.drawTitles()
 
 	var drops []*waterDrop
 	for _, drop := range r.drops {
