@@ -1,35 +1,30 @@
-Digital Rain
-============
+# Digital Rain
 
-Digital Rain is an HTML5 + Canvas demo app written entirely in [Go](http://golang.org/).
-It's intended to mimic the look of the [falling text](https://www.youtube.com/watch?v=rpWrtXyEAN0) in the movie [The Matrix](http://www.imdb.com/title/tt0133093/).
+Digital Rain is an HTML5 + Canvas demo app written entirely in [Go](https://go.dev/).
+It's intended to mimic the look of the [falling text](https://www.youtube.com/watch?v=rpWrtXyEAN0) in the movie [The Matrix](https://www.imdb.com/title/tt0133093/).
 
-[Live Demo](http://tidwall.com/digitalrain/)
+[Live Demo](https://matrix.yesmar.com/)
 
-Build
------
+## Notes on the fork
 
-Install [Go](http://golang.org/) and [GopherJS](http://github.com/gopherjs/gopherjs)
+* Instructions updated to use the latest version of GopherJS
+* Fixed links to point to the right places using https
+* Removed github.com link overlay and commented out the click event handler for a cleaner presetation
+* Changed hard coded page title to a variable and updated the message
+
+## Build
+
+Install [Go](https://go.dev/dl) and [GopherJS](https://github.com/gopherjs/gopherjs)
 
 ```bash
-# Prepare GOPATH
-export GOPATH=$(go env GOPATH)
-export PATH=$PATH:$(go env GOPATH)/bin
-
-# Install gopherjs
-go install github.com/gopherjs/gopherjs@v1.18.0-beta2
-
-# Install specific go version for gopherjs
-go install golang.org/dl/go1.18.10@latest
-go1.18.10 download
-export GOPHERJS_GOROOT="$(go1.18.10 env GOROOT)"
-
-# Build and Serve
+go install golang.org/dl/go1.19.13@latest
+go1.19.13 download
+export GOPHERJS_GOROOT="$(go1.19.13 env GOROOT)"
+go1.19.13 install github.com/gopherjs/gopherjs@v1.19.0-beta1
 gopherjs build digitalrain.go --minify
 gopherjs serve
 ```
 
-License
--------
+## License
 
 Digital Rain is available under the [MIT License](LICENSE).
