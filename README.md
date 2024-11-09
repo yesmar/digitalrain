@@ -9,7 +9,7 @@ It's intended to mimic the look of the [falling text](https://www.youtube.com/wa
 
 * Instructions updated to use the latest version of GopherJS
 * Fixed links to point to the right places using https
-* Removed github.com link overlay and commented out the click event handler for a cleaner presetation
+* Removed github.com link overlay and commented out the click event handler for a cleaner presentation
 * Changed hard coded page title to a variable and updated the message
 
 ## Build
